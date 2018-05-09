@@ -95,6 +95,7 @@ type Workstation struct {
 	ID                   int     `xml:"workstationid"`
 	GUID                 string  `xml:"guid"`
 	Name                 string  `xml:"name"`
+	Description          string  `xml:"description"`
 	AgentVersion         string  `xml:"agent_version"`
 	InstallDate          string  `xml:"install_date"`
 	LastBootTime         int     `xml:"last_boot_time"`
