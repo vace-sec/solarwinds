@@ -170,3 +170,20 @@ type Software struct {
 	Deleted     int    `xml:"deleted"`
 	Modified    int    `xml:"modified"`
 }
+
+// Check contains details about a check that is performed on a server or workstation
+type Check struct {
+	ID               int    `xml:"checkid"`
+	UID              int    `xml:"uid"`
+	SyncStatus       string `xml:"sync_status"`
+	CheckType        int    `xml:"check_type"`
+	Description      string `xml:"description"`
+	Dsc24x7          int    `xml:"dsc_247"`
+	StatusID         int    `xml:"statusid"`
+	ConsecutiveFails int    `xml:"consecutive_fails"`
+	Date             string `xml:"date"`
+	Time             string `xml:"time"`
+	UTCRun           string `xml:"utx_run"`
+	EMail            int    `xml:"email"`
+	SMS              int    `xml:"sms"`
+}

@@ -105,7 +105,7 @@ func (api Solarwinds) ListWorkstations(siteid int) ([]Workstation, error) {
 // ListDeviceSoftware returns a list of installed software for a device.
 func (api Solarwinds) ListDeviceSoftware(deviceid int) ([]Software, error) {
 	body := struct {
-		Software []Software `xml:"software>item"`
+		Items []Software `xml:"software>item"`
 	}{}
 
 	err := api.get(url.Values{
@@ -116,5 +116,39 @@ func (api Solarwinds) ListDeviceSoftware(deviceid int) ([]Software, error) {
 		return nil, err
 	}
 
-	return body.Software, nil
+	return body.Items, nil
+}
+
+// ListChecks returns a list of all checks for a device.
+func (api Solarwinds) ListChecks(deviceid int) ([]Check, error) {
+	body := struct {
+		Items []Check `xml:"items>check"`
+	}{}
+
+	err := api.get(url.Values{
+		"service":  []string{"list_checks"},
+		"deviceid": []string{strconv.Itoa(deviceid)},
+	}, &body)
+	if err != nil {
+		return nil, err
+	}
+
+	return body.Items, nil
+}
+
+// GetFormattedCheckOutput returns formatted Dashboard More Information firstline result of check (error or otherwise).
+func (api Solarwinds) GetFormattedCheckOutput(checkid int) (string, error) {
+	body := struct {
+		Output string `xml:"formatted_output"`
+	}{}
+
+	err := api.get(url.Values{
+		"service": []string{"get_formatted_check_output"},
+		"checkid": []string{strconv.Itoa(checkid)},
+	}, &body)
+	if err != nil {
+		return "", err
+	}
+
+	return body.Output, nil
 }
